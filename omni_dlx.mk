@@ -1,21 +1,24 @@
 # Boot animation
-TARGET_SCREEN_HEIGHT := 1920
-TARGET_SCREEN_WIDTH := 1080
+# TARGET_SCREEN_HEIGHT := 1920
+# TARGET_SCREEN_WIDTH := 1080
 
 # Release name
-PRODUCT_RELEASE_NAME := dlx
+# PRODUCT_RELEASE_NAME := dlx
 
-# overlays
-PRODUCT_PACKAGE_OVERLAYS += device/htc/dlx/overlay
+# Get the long list of APNs
+$(call inherit-product, vendor/omni/config/cdma.mk)
 
-# Inherit some common CM stuff.
+# Inherit from those products. Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+# Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
+
+# Inherit from dlx device
+$(call inherit-product, device/htc/dlx/device.mk)
 
 # Enhanced NFC
 # $(call inherit-product, vendor/du/config/nfc_enhanced.mk)
-
-# Inherit device configuration
-$(call inherit-product, device/htc/dlx/full_dlx.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := dlx
